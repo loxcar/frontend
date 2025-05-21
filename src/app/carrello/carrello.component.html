@@ -1,0 +1,60 @@
+<div class="main-container">
+  <header class="cart-header">
+    <h1>La Tana del Nerd</h1>
+    <button class="continue-shopping" routerLink="/">← Torna allo shopping</button>
+  </header>
+
+  <div class="cart-container">
+    <div class="cart-header">
+      <h1>Carrello</h1>
+      <p class="cart-summary">Hai <span class="items-count">{{ carrello.length }}</span> prodotti nel carrello</p>
+    </div>
+
+    <div class="cart-items" *ngIf="carrello.length > 0">
+      <div class="cart-item" *ngFor="let item of carrello">
+        <div class="item-image">
+          <!-- Utilizza l'URL dell'immagine dal backend se disponibile -->
+          <img [src]="'http://localhost:8081' + item.prodotto.immagine" alt="{{ item.prodotto.nome }}">
+          <!-- Altrimenti mostra un placeholder -->
+          <div *ngIf="!item.prodotto.immagine" class="placeholder-image">
+            <span>{{ item.prodotto.nome.charAt(0) }}</span>
+          </div>
+        </div>
+        <div class="item-details">
+          <h3>{{ item.prodotto.nome }}</h3>
+          <p class="item-price">€ {{ item.prodotto.prezzo.toFixed(2) }}</p>
+        </div>
+        <div class="item-quantity">
+         <button (click)="decrementaQuantita(item)" class="btn btn-sm btn-outline-primary">-</button>
+          <span class="quantity">{{ item.quantita }}</span>
+          <button (click)="incrementaQuantita(item)" class="btn btn-sm btn-primary">+</button>
+        </div>
+        <div class="item-total">
+          € {{ (item.prodotto.prezzo * item.quantita).toFixed(2) }}
+        </div>
+        <div class="item-remove">
+          <button (click)="rimuoviDalCarrello(item)" class="btn btn-danger">X</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-summary-container" *ngIf="carrello.length > 0">
+      <div class="cart-totals">
+        <div class="totals-row total">
+          <span>Totale ordine:</span>
+          <span>€ {{ totaleCarrello.toFixed(2) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-actions" *ngIf="carrello.length > 0">
+      <button class="continue-shopping" routerLink="/">Continua lo shopping</button>
+      <button class="checkout" (click)="procediAllOrdine()">Procedi all'ordine</button>
+    </div>
+
+    <div *ngIf="carrello.length === 0" class="empty-cart">
+      <p>Il tuo carrello è vuoto</p>
+      <button class="continue-shopping" routerLink="/">Torna allo shopping</button>
+    </div>
+  </div>
+</div>

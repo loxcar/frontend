@@ -1,0 +1,19 @@
+<header>
+  <h1>La Tana del Nerd</h1>
+  <button id="carrello" routerLink="/carrello">
+  🛒 Carrello ({{ carrello.length }})
+</button>
+</header>
+
+<input [(ngModel)]="searchText" placeholder="Cerca un prodotto nerd..." />
+
+<div class="card" *ngFor="let prodotto of prodottiFiltrati">
+  <img [src]=" 'http://localhost:8081' + prodotto.immagine " alt="{{ prodotto.nome }}" class="immagine-prodotto" />
+  <h2>{{ prodotto.nome }}</h2>
+  <p>Prezzo: € {{ prodotto.prezzo }}</p>
+  <p>quantita: {{ prodotto.quantita }}</p>
+  <button (click)="aggiungiAlCarrello(prodotto)">Aggiungi al carrello</button>
+</div>
+
+
+
